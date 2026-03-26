@@ -172,6 +172,32 @@ Flash each half separately while connected via USB.
 
 Download the [Vial app](https://get.vial.today/) and connect your keyboard. Changes take effect immediately without reflashing.
 
+> **Note for Linux users:** The firmware code in this repository is complete and ready to use. However, the steps below must be performed on your **local Linux machine** — they cannot be done inside this repository.
+
+#### Linux Local Setup
+
+| Step | Location | Status |
+|------|----------|--------|
+| Vial firmware code | This repository (`keymaps/vial/`) | ✅ Already complete |
+| udev rules | Local Linux `/etc/udev/rules.d/` | ⚙️ Must be configured locally |
+| Vial app installation | Local Linux | ⚙️ Must be installed locally |
+
+**1. Flash the firmware** (requires a local QMK environment):
+
+```bash
+qmk compile -kb crkbd -km vial
+qmk flash -kb crkbd -km vial
+```
+
+**2. Add udev rules** so the Vial app can access the HID device:
+
+```bash
+sudo wget https://get.vial.today/udev/92-vial.rules -O /etc/udev/rules.d/92-vial.rules
+sudo udevadm control --reload-rules && sudo udevadm trigger
+```
+
+**3. Install the Vial app**, connect your keyboard, and start editing your keymap in real time.
+
 ---
 
 ## Configuration Highlights
